@@ -30,14 +30,14 @@ const photo = getImage(about.image.file);
         width={960}
         widths={[480, 960]}
         sizes="(min-width: 1024px) 50vw, 100vw"
-        class="aspect-4/5 w-full rounded-3xl object-cover shadow-lg sm:aspect-3/2 lg:aspect-4/5"
+        class="reveal aspect-4/5 w-full rounded-3xl object-cover shadow-lg sm:aspect-3/2 lg:aspect-4/5"
       />
     )}
   </div>
 
   <ul class="mx-auto mt-16 grid max-w-6xl gap-4 px-4 sm:grid-cols-3 sm:px-6">
     {about.highlights.map((h) => (
-      <li class="rounded-2xl border-t-4 border-salvia bg-white/60 p-6">
+      <li class="reveal rounded-2xl border-t-4 border-salvia bg-white/60 p-6">
         <p class="font-display text-3xl font-semibold">{h.value}</p>
         <p class="mt-1 text-espresso/80">{h.label}</p>
       </li>

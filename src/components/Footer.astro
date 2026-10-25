@@ -6,7 +6,8 @@ import Logo from "./Logo.astro";
 const { footer } = content;
 const year = new Date().getFullYear();
 const whatsappHref = whatsappUrl();
-const linkClass = "underline-offset-4 hover:underline";
+// inline-block + py-1: área táctil de al menos 24 px de alto.
+const linkClass = "inline-block py-1 underline-offset-4 hover:underline";
 ---
 
 <footer class="bg-espresso text-crema">
@@ -18,7 +19,7 @@ const linkClass = "underline-offset-4 hover:underline";
 
     <div>
       <h2 class="mb-3 text-lg font-semibold">{footer.contactTitle}</h2>
-      <address class="space-y-1 text-crema/80 not-italic">
+      <address class="text-crema/80 not-italic">
         <p>{site.address.street}</p>
         <p>
           {site.address.neighborhood}, {site.address.city}

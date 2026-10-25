@@ -38,7 +38,9 @@ const layout = [tall, normal, normal, wide, wide, normal];
       />
       <ul class="grid auto-rows-[12rem] grid-cols-2 gap-3 sm:gap-4 md:auto-rows-[14rem] md:grid-cols-3">
         {photos.map((photo, i) => (
-          <li class:list={["overflow-hidden rounded-2xl", layout[i]?.span]}>
+          <li
+            class:list={["reveal overflow-hidden rounded-2xl", layout[i]?.span]}
+          >
             <Image
               src={photo.src}
               alt={photo.alt}

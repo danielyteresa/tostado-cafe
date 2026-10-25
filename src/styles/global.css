@@ -46,4 +46,35 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-terracota-oscuro;
   }
+
+  /* Sobre fondo espresso (Hero, Footer) el contorno terracota casi no se ve: usamos crema. */
+  .bg-espresso :focus-visible {
+    @apply outline-crema;
+  }
+}
+
+/*
+ * Animación al aparecer: el elemento sube un poco y se hace visible cuando
+ * entra en pantalla al hacer scroll. Es solo CSS (animation-timeline: view()),
+ * sin JavaScript. Se aplica únicamente si:
+ *  - la persona no pidió reducir el movimiento en su sistema, y
+ *  - el navegador lo soporta (en los que no, el contenido se ve normal).
+ */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+}
+
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 60%;
+      }
+    }
+  }
 }
