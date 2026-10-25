@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tostado-cafe.netlify.app/sitemap-index.xml

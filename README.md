@@ -2,7 +2,7 @@
 
 Landing page de una sola página para **Tostado**, una cafetería de especialidad ficticia. Es un proyecto de portafolio: el negocio, los datos de contacto y las reseñas son inventados.
 
-**🔗 Sitio en vivo:** _pendiente: se agrega al publicar en Netlify_
+**🔗 Sitio en vivo:** https://glistening-squirrel-ed591c.netlify.app
 
 <p>
   <img src="docs/captura-escritorio.jpg" alt="Vista de escritorio: header, y hero con foto de la barra y el eslogan" width="640" />

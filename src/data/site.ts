@@ -61,7 +61,7 @@ export const site = {
   ] satisfies NavLink[],
 
   /** Enlace a tu GitHub para el footer. */
-  githubUrl: "https://github.com/",
+  githubUrl: "https://github.com/danielyteresa/tostado-cafe",
   portfolioNotice: "Proyecto de portafolio – negocio ficticio",
 } as const;
 
