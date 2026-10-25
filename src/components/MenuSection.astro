@@ -1,0 +1,47 @@
+---
+import { menu } from "../data/menu";
+import { content } from "../data/site";
+import MenuCard from "./MenuCard.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const { menu: text } = content;
+
+// Agrupa los productos por categoría, en el orden definido en site.ts.
+const groups = text.categories
+  .map((category) => ({
+    ...category,
+    items: menu.filter((item) => item.category === category.id),
+  }))
+  .filter((group) => group.items.length > 0);
+---
+
+<section
+  id="menu"
+  aria-labelledby="menu-titulo"
+  class="bg-espresso/5 py-20 sm:py-28"
+>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading
+      id="menu-titulo"
+      eyebrow={text.eyebrow}
+      title={text.title}
+      subtitle={text.subtitle}
+    />
+
+    <div class="space-y-12">
+      {groups.map((group) => (
+        <div>
+          <h3 class="mb-5 flex items-center gap-3 text-2xl font-semibold">
+            <span class="h-px w-8 bg-terracota" aria-hidden="true" />
+            {group.label}
+          </h3>
+          <ul class="grid gap-4 md:grid-cols-2">
+            {group.items.map((item) => (
+              <MenuCard item={item} />
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

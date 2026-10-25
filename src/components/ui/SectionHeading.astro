@@ -1,0 +1,27 @@
+---
+interface Props {
+  /** id del h2, para que la sección lo use en aria-labelledby. */
+  id: string;
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  align?: "left" | "center";
+}
+
+const { id, eyebrow, title, subtitle, align = "left" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "mb-10 max-w-2xl space-y-3",
+    align === "center" && "mx-auto text-center",
+  ]}
+>
+  <p class="text-sm font-semibold tracking-widest text-terracota-oscuro uppercase">
+    {eyebrow}
+  </p>
+  <h2 id={id} class="text-4xl font-semibold sm:text-5xl">
+    {title}
+  </h2>
+  {subtitle && <p class="text-lg text-espresso/80">{subtitle}</p>}
+</div>

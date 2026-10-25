@@ -1,0 +1,48 @@
+---
+import { content } from "../data/site";
+import { testimonials } from "../data/testimonials";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const { testimonials: text } = content;
+const stars = [1, 2, 3, 4, 5];
+---
+
+<section aria-labelledby="testimonios-titulo" class="py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading
+      id="testimonios-titulo"
+      eyebrow={text.eyebrow}
+      title={text.title}
+      align="center"
+    />
+
+    <ul class="grid gap-6 md:grid-cols-3">
+      {testimonials.map((t) => (
+        <li>
+          <figure class="flex h-full flex-col gap-4 rounded-2xl bg-white/70 p-6 shadow-sm ring-1 ring-espresso/5">
+            <p
+              class="flex gap-1 text-terracota"
+              role="img"
+              aria-label={text.ratingLabel(t.rating)}
+            >
+              {stars.map((n) => (
+                <svg
+                  viewBox="0 0 20 20"
+                  class:list={["size-5", n > t.rating && "text-espresso/20"]}
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
+                </svg>
+              ))}
+            </p>
+            <blockquote class="flex-1 text-lg leading-relaxed">
+              <p>“{t.quote}”</p>
+            </blockquote>
+            <figcaption class="font-semibold">{t.name}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

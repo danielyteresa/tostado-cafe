@@ -1,22 +1,43 @@
 ---
+import { Image } from "astro:assets";
 import { content } from "../data/site";
+import { getImage } from "../lib/images";
 import Button from "./ui/Button.astro";
 
 const { hero } = content;
+const photo = getImage(hero.image.file);
 ---
 
 <section
   aria-labelledby="hero-titulo"
   class="relative isolate overflow-hidden bg-espresso text-crema"
 >
-  <!--
-    Fondo provisional con degradados de la paleta. Cuando tengamos la foto,
-    irá aquí con <Image /> (sin loading="lazy", porque es lo primero que se ve).
-  -->
-  <div
-    class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,var(--color-terracota)_0%,transparent_55%),radial-gradient(ellipse_at_bottom_left,var(--color-salvia)_0%,transparent_50%)] opacity-60"
-    aria-hidden="true"
-  ></div>
+  {photo ? (
+    <>
+      {/* La foto del hero se carga de inmediato: es lo primero que se ve. */}
+      <Image
+        src={photo}
+        alt={hero.image.alt}
+        width={1920}
+        widths={[640, 1280, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 -z-20 size-full object-cover"
+      />
+      {/* Capa oscura para que el texto crema tenga buen contraste. */}
+      <div
+        class="absolute inset-0 -z-10 bg-linear-to-r from-espresso/90 via-espresso/75 to-espresso/40"
+        aria-hidden="true"
+      />
+    </>
+  ) : (
+    /* Sin foto: fondo con degradados de la paleta. */
+    <div
+      class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,var(--color-terracota)_0%,transparent_55%),radial-gradient(ellipse_at_bottom_left,var(--color-salvia)_0%,transparent_50%)] opacity-60"
+      aria-hidden="true"
+    />
+  )}
 
   <div class="mx-auto flex min-h-[calc(85svh-4rem)] max-w-6xl flex-col justify-center gap-6 px-4 py-20 sm:px-6">
     <p class="text-sm font-semibold tracking-widest text-crema/80 uppercase">

@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import { content } from "../data/site";
+import { getImage } from "../lib/images";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const { about } = content;
+const photo = getImage(about.image.file);
+---
+
+<section id="nosotros" aria-labelledby="nosotros-titulo" class="py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
+    <div>
+      <SectionHeading
+        id="nosotros-titulo"
+        eyebrow={about.eyebrow}
+        title={about.title}
+      />
+      <div class="space-y-4 text-lg leading-relaxed text-espresso/90">
+        {about.paragraphs.map((p) => (
+          <p>{p}</p>
+        ))}
+      </div>
+    </div>
+
+    {photo && (
+      <Image
+        src={photo}
+        alt={about.image.alt}
+        width={960}
+        widths={[480, 960]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        class="aspect-4/5 w-full rounded-3xl object-cover shadow-lg sm:aspect-3/2 lg:aspect-4/5"
+      />
+    )}
+  </div>
+
+  <ul class="mx-auto mt-16 grid max-w-6xl gap-4 px-4 sm:grid-cols-3 sm:px-6">
+    {about.highlights.map((h) => (
+      <li class="rounded-2xl border-t-4 border-salvia bg-white/60 p-6">
+        <p class="font-display text-3xl font-semibold">{h.value}</p>
+        <p class="mt-1 text-espresso/80">{h.label}</p>
+      </li>
+    ))}
+  </ul>
+</section>

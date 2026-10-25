@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import { content } from "../data/site";
+import { getImage } from "../lib/images";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const { gallery } = content;
+
+// Solo las fotos que ya existen en src/assets/images/.
+const photos = gallery.photos.flatMap((photo) => {
+  const src = getImage(photo.file);
+  return src ? [{ src, alt: photo.alt }] : [];
+});
+
+// Mosaico: algunas fotos ocupan dos filas o dos columnas en pantallas grandes.
+// "sizes" le dice al navegador qué tan ancha se verá cada foto, para que
+// descargue el tamaño justo (la que ocupa dos columnas necesita el doble).
+const normal = {
+  span: "",
+  sizes: "(min-width: 1152px) 370px, (min-width: 768px) 33vw, 50vw",
+};
+const tall = { ...normal, span: "md:row-span-2" };
+const wide = {
+  span: "md:col-span-2",
+  sizes: "(min-width: 1152px) 750px, (min-width: 768px) 66vw, 50vw",
+};
+// En escritorio forman una cuadrícula de 3×3 sin huecos.
+const layout = [tall, normal, normal, wide, wide, normal];
+---
+
+{photos.length > 0 && (
+  <section aria-labelledby="galeria-titulo" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <SectionHeading
+        id="galeria-titulo"
+        eyebrow={gallery.eyebrow}
+        title={gallery.title}
+      />
+      <ul class="grid auto-rows-[12rem] grid-cols-2 gap-3 sm:gap-4 md:auto-rows-[14rem] md:grid-cols-3">
+        {photos.map((photo, i) => (
+          <li class:list={["overflow-hidden rounded-2xl", layout[i]?.span]}>
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              width={1200}
+              widths={[400, 800, 1200]}
+              sizes={layout[i]?.sizes ?? normal.sizes}
+              class="size-full object-cover transition-transform duration-500 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
