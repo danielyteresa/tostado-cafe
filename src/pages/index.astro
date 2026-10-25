@@ -1,15 +1,31 @@
 ---
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { content } from "../data/site";
+
+// Página temporal: en la fase 4 la reemplazamos por las secciones reales.
+const swatches = [
+  "bg-espresso",
+  "bg-crema",
+  "bg-terracota",
+  "bg-terracota-oscuro",
+  "bg-salvia",
+];
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Tostado · Café de barrio</title>
-  </head>
-  <body class="grid min-h-screen place-items-center bg-amber-50">
-    <h1 class="text-4xl font-bold text-amber-900">Tostado funciona ☕</h1>
-  </body>
-</html>
+<BaseLayout>
+  <main class="mx-auto grid min-h-screen max-w-3xl place-content-center gap-6 px-4">
+    <h1 class="text-4xl font-semibold sm:text-5xl">{content.hero.title}</h1>
+    <p class="text-lg">{content.hero.subtitle}</p>
+    <ul class="flex gap-3" aria-hidden="true">
+      {swatches.map((c) => (
+        <li class={`size-12 rounded-full border border-espresso/20 ${c}`} />
+      ))}
+    </ul>
+    <a
+      href={content.hero.primaryCta.href}
+      class="w-fit rounded-full bg-terracota-oscuro px-6 py-3 font-semibold text-white hover:bg-espresso"
+    >
+      {content.hero.primaryCta.label}
+    </a>
+  </main>
+</BaseLayout>

@@ -23,6 +23,11 @@ Proyecto de portafolio: landing de una página para una cafetería ficticia.
 espresso #3B2416 · crema #F5EBDD · terracota #C8553D · salvia #7A8B69
 Fuentes: Fraunces (títulos), Inter (texto).
 
+- Clases de Tailwind: `espresso`, `crema`, `terracota`, `terracota-oscuro`, `salvia`; fuentes `font-display` y `font-sans`.
+- Para texto, enlaces y botones usa `terracota-oscuro` (#A8432F): `terracota` no pasa contraste AA en texto normal.
+- `salvia` es solo decorativo (bordes, íconos, fondos), nunca para texto sobre crema.
+- Las fuentes se configuran en astro.config.mjs (API de fuentes de Astro), no con enlaces a Google Fonts.
+
 ## Comandos
 
 - `npm run dev` — servidor local en http://localhost:4321

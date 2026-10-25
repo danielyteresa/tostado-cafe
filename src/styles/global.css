@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/*
+ * Tema de la marca. Cada variable --color-* crea utilidades como
+ * bg-espresso, text-crema o border-salvia.
+ */
+@theme {
+  --color-espresso: #3b2416;
+  --color-crema: #f5ebdd;
+  --color-terracota: #c8553d;
+  /* Terracota oscuro: pasa contraste AA en textos y botones (5:1 sobre crema, 6:1 con texto blanco). */
+  --color-terracota-oscuro: #a8432f;
+  /* Salvia es decorativo: sobre crema no llega a contraste AA para texto. */
+  --color-salvia: #7a8b69;
+}
+
+/* Las fuentes las define Astro (astro.config.mjs) en variables CSS; aquí las conectamos a Tailwind. */
+@theme inline {
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-crema font-sans text-espresso antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-balance;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-terracota-oscuro;
+  }
+}

@@ -1,0 +1,95 @@
+---
+import { Font } from "astro:assets";
+import { site } from "../data/site";
+import "../styles/global.css";
+
+interface Props {
+  /** Título de la pestaña. Si no se pasa, se usa el nombre completo del negocio. */
+  title?: string;
+  description?: string;
+  /** Ruta de la imagen para redes sociales, dentro de public/. */
+  image?: string;
+}
+
+const {
+  title = `${site.fullName} | ${site.slogan}`,
+  description = site.description,
+  image = "/og-image.jpg",
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+
+// Datos estructurados: le dicen a Google que esto es una cafetería, con su dirección y horario.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  name: site.fullName,
+  description: site.description,
+  url: canonicalUrl.href,
+  image: imageUrl.href,
+  telephone: site.contact.phone,
+  email: site.contact.email,
+  priceRange: site.priceRange,
+  servesCuisine: "Café",
+  foundingDate: String(site.foundingYear),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.geo.lat,
+    longitude: site.geo.lng,
+  },
+  openingHoursSpecification: site.hours.map((h) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  sameAs: site.social.map((s) => s.href),
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#3B2416" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph: cómo se ve el enlace al compartirlo en redes -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.fullName} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fuentes servidas desde el propio sitio; preload solo para la de títulos -->
+    <Font cssVariable="--font-fraunces" preload />
+    <Font cssVariable="--font-inter" />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(structuredData)}
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
