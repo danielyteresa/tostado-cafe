@@ -2,7 +2,7 @@
 
 Landing page de una sola página para **Tostado**, una cafetería de especialidad ficticia. Es un proyecto de portafolio: el negocio, los datos de contacto y las reseñas son inventados.
 
-**🔗 Sitio en vivo:** https://glistening-squirrel-ed591c.netlify.app
+**🔗 Sitio en vivo:** https://tostadocafe.netlify.app
 
 <p>
   <img src="docs/captura-escritorio.jpg" alt="Vista de escritorio: header, y hero con foto de la barra y el eslogan" width="640" />
@@ -19,11 +19,11 @@ Landing page de una sola página para **Tostado**, una cafetería de especialida
 - **SEO:** título y descripción, Open Graph, sitemap, `robots.txt` y datos estructurados `CafeOrCoffeeShop` en JSON-LD.
 - **Rápido:** imágenes WebP en varios tamaños con `<Image />` de Astro, fuentes servidas desde el propio sitio y **un solo script** (el menú móvil). Las animaciones al hacer scroll son solo CSS y respetan `prefers-reduced-motion`.
 
-### Lighthouse (móvil)
+### Lighthouse (móvil, sitio en vivo)
 
 | Rendimiento | Accesibilidad | Buenas prácticas | SEO |
 | :---------: | :-----------: | :--------------: | :-: |
-|     98      |      100      |       100        | 100 |
+|     99      |      100      |       100        | 100 |
 
 ## Stack
 
