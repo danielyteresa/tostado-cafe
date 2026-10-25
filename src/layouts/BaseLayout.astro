@@ -9,12 +9,15 @@ interface Props {
   description?: string;
   /** Ruta de la imagen para redes sociales, dentro de public/. */
   image?: string;
+  /** true en páginas que no deben aparecer en Google (ej. /gracias). */
+  noindex?: boolean;
 }
 
 const {
   title = `${site.fullName} | ${site.slogan}`,
   description = site.description,
   image = "/og-image.jpg",
+  noindex = false,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
@@ -68,6 +71,7 @@ const structuredData = {
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#3B2416" />
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex" />}
 
     <!-- Open Graph: cómo se ve el enlace al compartirlo en redes -->
     <meta property="og:type" content="website" />

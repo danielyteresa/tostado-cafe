@@ -1,11 +1,11 @@
 ---
 import { content, site } from "../data/site";
+import { phoneHref, whatsappUrl } from "../lib/links";
 import Logo from "./Logo.astro";
 
 const { footer } = content;
 const year = new Date().getFullYear();
-const phoneHref = `tel:${site.contact.phone.replace(/\s/g, "")}`;
-const whatsappHref = `https://wa.me/${site.contact.whatsapp}`;
+const whatsappHref = whatsappUrl();
 const linkClass = "underline-offset-4 hover:underline";
 ---
 

@@ -7,7 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   // URL pública del sitio. Cámbiala cuando tengas la definitiva (fase 8).
   site: "https://tostado-cafe.netlify.app",
-  integrations: [sitemap()],
+  // La página de gracias no se incluye en el sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes("/gracias") })],
   // Astro descarga las fuentes de Google y las sirve desde tu propio sitio,
   // con font-display: swap y una fuente de respaldo ajustada para evitar saltos.
   fonts: [

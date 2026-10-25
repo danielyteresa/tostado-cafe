@@ -54,10 +54,10 @@ export const site = {
   ] satisfies SocialLink[],
 
   nav: [
-    { label: "Menú", href: "#menu" },
-    { label: "Nosotros", href: "#nosotros" },
-    { label: "Ubicación", href: "#ubicacion" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Menú", href: "/#menu" },
+    { label: "Nosotros", href: "/#nosotros" },
+    { label: "Ubicación", href: "/#ubicacion" },
+    { label: "Contacto", href: "/#contacto" },
   ] satisfies NavLink[],
 
   /** Enlace a tu GitHub para el footer. */
@@ -68,7 +68,7 @@ export const site = {
 // Textos de cada sección de la página.
 export const content = {
   header: {
-    cta: { label: "Reservar", href: "#contacto" },
+    cta: { label: "Reservar", href: "/#contacto" },
     navLabel: "Principal",
     homeLabel: "Tostado, ir al inicio",
     skipLink: "Saltar al contenido",
@@ -80,8 +80,8 @@ export const content = {
     title: site.slogan,
     subtitle:
       "Tostamos en casa, molemos al momento y te lo servimos como te gusta.",
-    primaryCta: { label: "Ver menú", href: "#menu" },
-    secondaryCta: { label: "Reservar mesa", href: "#contacto" },
+    primaryCta: { label: "Ver menú", href: "/#menu" },
+    secondaryCta: { label: "Reservar mesa", href: "/#contacto" },
     // Las fotos van en src/assets/images/ con este nombre de archivo.
     image: {
       file: "hero.jpg",
@@ -153,18 +153,30 @@ export const content = {
     ratingLabel: (rating: number) => `${rating} de 5 estrellas`,
   },
   location: {
+    eyebrow: "Ubicación",
     title: "Dónde estamos",
+    intro: "A dos cuadras del parque, en la esquina con la panadería vieja.",
+    addressTitle: "Dirección",
     hoursTitle: "Horario",
     directionsLabel: "Cómo llegar",
+    mapTitle: "Mapa con la ubicación de Tostado",
+    newTabNote: "(se abre en otra pestaña)",
   },
   contact: {
+    eyebrow: "Contacto",
     title: "Reserva tu mesa",
     subtitle:
       "Déjanos tus datos y te confirmamos por correo. ¿Prefieres algo más rápido? Escríbenos por WhatsApp.",
     whatsappLabel: "Escríbenos por WhatsApp",
     whatsappMessage: "¡Hola! Quiero reservar una mesa en Tostado.",
+    newTabNote: "(se abre en otra pestaña)",
     submitLabel: "Enviar reserva",
-    successMessage: "¡Listo! Recibimos tu reserva y te escribimos pronto.",
+    requiredNote: "Los campos con * son obligatorios.",
+    /** Nombre del formulario en Netlify (aparece en el panel de Netlify). */
+    formName: "reservas",
+    /** Página a la que Netlify lleva después de enviar. */
+    successPath: "/gracias",
+    people: { min: 1, max: 12, default: 2 },
     fields: {
       name: "Nombre",
       email: "Correo",
@@ -172,6 +184,20 @@ export const content = {
       people: "Número de personas",
       message: "Mensaje (opcional)",
     },
+    placeholders: {
+      name: "Tu nombre",
+      email: "tu@correo.com",
+      message: "¿Algo que debamos saber? Cumpleaños, silla para bebé…",
+    },
+    /** Campo trampa invisible: si un bot lo llena, Netlify descarta el envío. */
+    honeypotLabel: "No llenes este campo si eres humano",
+  },
+  thanks: {
+    pageTitle: "¡Reserva enviada! | Tostado · Café de barrio",
+    title: "¡Listo, recibimos tu reserva!",
+    message:
+      "Te escribimos a tu correo en las próximas horas para confirmarla. Si es para hoy, mejor mándanos un WhatsApp.",
+    backLabel: "Volver al inicio",
   },
   footer: {
     contactTitle: "Contacto",

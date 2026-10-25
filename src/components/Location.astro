@@ -1,0 +1,67 @@
+---
+import { content, site } from "../data/site";
+import { directionsUrl, mapEmbedUrl } from "../lib/links";
+import Button from "./ui/Button.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const { location } = content;
+const { address } = site;
+---
+
+<section
+  id="ubicacion"
+  aria-labelledby="ubicacion-titulo"
+  class="bg-espresso/5 py-20 sm:py-28"
+>
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[2fr_3fr] lg:items-center">
+    <div>
+      <SectionHeading
+        id="ubicacion-titulo"
+        eyebrow={location.eyebrow}
+        title={location.title}
+        subtitle={location.intro}
+      />
+
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-1">
+        <div>
+          <h3 class="mb-2 text-xl font-semibold">{location.addressTitle}</h3>
+          <address class="text-lg not-italic">
+            {address.street}
+            <br />
+            {address.neighborhood}, {address.city}
+            <br />
+            {address.region}, {address.postalCode}
+          </address>
+        </div>
+
+        <div>
+          <h3 class="mb-2 text-xl font-semibold">{location.hoursTitle}</h3>
+          <dl class="space-y-2 text-lg">
+            {site.hours.map((h) => (
+              <div class="flex justify-between gap-4 border-b border-espresso/10 pb-2">
+                <dt>{h.label}</dt>
+                <dd class="font-semibold whitespace-nowrap">
+                  {h.opens} – {h.closes}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      <Button href={directionsUrl} target="_blank" rel="noopener" class="mt-8">
+        {location.directionsLabel}
+        <span class="sr-only">{location.newTabNote}</span>
+      </Button>
+    </div>
+
+    <!-- El mapa carga en diferido: no frena la carga inicial de la página -->
+    <iframe
+      src={mapEmbedUrl}
+      title={location.mapTitle}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      class="aspect-4/3 w-full rounded-3xl border-0 shadow-lg ring-1 ring-espresso/10"
+    ></iframe>
+  </div>
+</section>

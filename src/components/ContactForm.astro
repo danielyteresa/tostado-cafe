@@ -1,0 +1,143 @@
+---
+import { content } from "../data/site";
+import { whatsappUrl } from "../lib/links";
+import Button from "./ui/Button.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const { contact } = content;
+const { fields, placeholders } = contact;
+
+const labelClass = "mb-1 block font-semibold";
+const inputClass =
+  "w-full rounded-xl border border-espresso/50 bg-white px-4 py-3 text-base text-espresso placeholder:text-espresso/60";
+---
+
+<section id="contacto" aria-labelledby="contacto-titulo" class="py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[2fr_3fr]">
+    <div>
+      <SectionHeading
+        id="contacto-titulo"
+        eyebrow={contact.eyebrow}
+        title={contact.title}
+        subtitle={contact.subtitle}
+      />
+      <Button
+        href={whatsappUrl(contact.whatsappMessage)}
+        variant="outline"
+        target="_blank"
+        rel="noopener"
+      >
+        {contact.whatsappLabel}
+        <span class="sr-only">{contact.newTabNote}</span>
+      </Button>
+    </div>
+
+    <!--
+      Netlify Forms: al desplegar, Netlify detecta este formulario por
+      data-netlify="true" y guarda cada envío en su panel. No hace falta backend.
+      La validación (required, type="email", min/max) la hace el navegador.
+    -->
+    <form
+      name={contact.formName}
+      method="POST"
+      action={contact.successPath}
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="grid gap-5 rounded-3xl bg-white/70 p-6 shadow-sm ring-1 ring-espresso/5 sm:grid-cols-2 sm:p-8"
+    >
+      <input type="hidden" name="form-name" value={contact.formName} />
+      <p class="hidden">
+        <label>
+          {contact.honeypotLabel}
+          <input name="bot-field" tabindex="-1" autocomplete="off" />
+        </label>
+      </p>
+
+      <p class="text-sm text-espresso/80 sm:col-span-2">
+        {contact.requiredNote}
+      </p>
+
+      <div class="sm:col-span-2">
+        <label for="nombre" class={labelClass}>
+          {fields.name} <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          autocomplete="name"
+          required
+          placeholder={placeholders.name}
+          class={inputClass}
+        />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="correo" class={labelClass}>
+          {fields.email} <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="correo"
+          name="correo"
+          type="email"
+          autocomplete="email"
+          required
+          placeholder={placeholders.email}
+          class={inputClass}
+        />
+      </div>
+
+      <div>
+        <label for="fecha" class={labelClass}>
+          {fields.date} <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="fecha"
+          name="fecha"
+          type="date"
+          required
+          class={inputClass}
+        />
+      </div>
+
+      <div>
+        <label for="personas" class={labelClass}>
+          {fields.people} <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="personas"
+          name="personas"
+          type="number"
+          inputmode="numeric"
+          min={contact.people.min}
+          max={contact.people.max}
+          value={contact.people.default}
+          required
+          class={inputClass}
+        />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="mensaje" class={labelClass}>
+          {fields.message}
+        </label>
+        <textarea
+          id="mensaje"
+          name="mensaje"
+          rows="4"
+          placeholder={placeholders.message}
+          class={inputClass}
+        ></textarea>
+      </div>
+
+      <div class="sm:col-span-2">
+        <button
+          type="submit"
+          class="w-full rounded-full bg-terracota-oscuro px-6 py-3 font-semibold text-white transition-colors hover:bg-espresso sm:w-auto"
+        >
+          {contact.submitLabel}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
