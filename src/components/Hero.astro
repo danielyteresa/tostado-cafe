@@ -1,0 +1,39 @@
+---
+import { content } from "../data/site";
+import Button from "./ui/Button.astro";
+
+const { hero } = content;
+---
+
+<section
+  aria-labelledby="hero-titulo"
+  class="relative isolate overflow-hidden bg-espresso text-crema"
+>
+  <!--
+    Fondo provisional con degradados de la paleta. Cuando tengamos la foto,
+    irá aquí con <Image /> (sin loading="lazy", porque es lo primero que se ve).
+  -->
+  <div
+    class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,var(--color-terracota)_0%,transparent_55%),radial-gradient(ellipse_at_bottom_left,var(--color-salvia)_0%,transparent_50%)] opacity-60"
+    aria-hidden="true"
+  ></div>
+
+  <div class="mx-auto flex min-h-[calc(85svh-4rem)] max-w-6xl flex-col justify-center gap-6 px-4 py-20 sm:px-6">
+    <p class="text-sm font-semibold tracking-widest text-crema/80 uppercase">
+      {hero.eyebrow}
+    </p>
+    <h1
+      id="hero-titulo"
+      class="max-w-3xl text-5xl leading-[1.05] font-semibold sm:text-6xl lg:text-7xl"
+    >
+      {hero.title}
+    </h1>
+    <p class="max-w-xl text-lg text-crema/90 sm:text-xl">{hero.subtitle}</p>
+    <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+      <Button href={hero.primaryCta.href}>{hero.primaryCta.label}</Button>
+      <Button href={hero.secondaryCta.href} variant="light">
+        {hero.secondaryCta.label}
+      </Button>
+    </div>
+  </div>
+</section>

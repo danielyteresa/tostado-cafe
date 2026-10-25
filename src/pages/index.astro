@@ -1,31 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { content } from "../data/site";
-
-// Página temporal: en la fase 4 la reemplazamos por las secciones reales.
-const swatches = [
-  "bg-espresso",
-  "bg-crema",
-  "bg-terracota",
-  "bg-terracota-oscuro",
-  "bg-salvia",
-];
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
 ---
 
 <BaseLayout>
-  <main class="mx-auto grid min-h-screen max-w-3xl place-content-center gap-6 px-4">
-    <h1 class="text-4xl font-semibold sm:text-5xl">{content.hero.title}</h1>
-    <p class="text-lg">{content.hero.subtitle}</p>
-    <ul class="flex gap-3" aria-hidden="true">
-      {swatches.map((c) => (
-        <li class={`size-12 rounded-full border border-espresso/20 ${c}`} />
-      ))}
-    </ul>
-    <a
-      href={content.hero.primaryCta.href}
-      class="w-fit rounded-full bg-terracota-oscuro px-6 py-3 font-semibold text-white hover:bg-espresso"
-    >
-      {content.hero.primaryCta.label}
-    </a>
+  <Header />
+  <main id="contenido" tabindex="-1" class="outline-none">
+    <Hero />
+    <!-- Fase 5: Nosotros, Menú, Galería y Testimonios -->
+    <!-- Fase 6: Ubicación y Contacto -->
   </main>
+  <Footer />
 </BaseLayout>

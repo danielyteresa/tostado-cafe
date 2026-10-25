@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Variant = "primary" | "light" | "outline";
+
+interface Props extends HTMLAttributes<"a"> {
+  href: string;
+  /** primary: terracota · light: borde crema para fondos oscuros · outline: borde espresso para fondos claros */
+  variant?: Variant;
+}
+
+const { href, variant = "primary", class: className, ...rest } = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary: "bg-terracota-oscuro text-white hover:bg-espresso",
+  light: "border-2 border-crema text-crema hover:bg-crema hover:text-espresso",
+  outline:
+    "border-2 border-espresso text-espresso hover:bg-espresso hover:text-crema",
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    "inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-colors",
+    variants[variant],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</a>

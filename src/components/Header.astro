@@ -1,0 +1,152 @@
+---
+import { content, site } from "../data/site";
+import Button from "./ui/Button.astro";
+import Logo from "./Logo.astro";
+
+const { header } = content;
+---
+
+<!-- Enlace oculto que aparece al tabular: permite saltar directo al contenido -->
+<a
+  href="#contenido"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-espresso focus:px-4 focus:py-2 focus:text-crema"
+>
+  {header.skipLink}
+</a>
+
+<header class="sticky top-0 z-40 border-b border-espresso/10 bg-crema/95 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <a href="#" aria-label={header.homeLabel} class="rounded-md">
+      <Logo />
+    </a>
+
+    <!-- Navegación de escritorio -->
+    <nav aria-label={header.navLabel} class="hidden md:block">
+      <ul class="flex items-center gap-8">
+        {site.nav.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="font-medium underline-offset-4 hover:text-terracota-oscuro hover:underline"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <!-- El div controla la visibilidad: así no choca con el inline-flex del botón -->
+      <div class="hidden sm:block">
+        <Button href={header.cta.href} class="px-5 py-2">
+          {header.cta.label}
+        </Button>
+      </div>
+
+      <!-- Botón hamburguesa (solo móvil) -->
+      <button
+        type="button"
+        class="group inline-flex size-11 items-center justify-center rounded-full hover:bg-espresso/10 md:hidden"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        aria-label={header.openMenuLabel}
+        data-menu-toggle
+        data-open-label={header.openMenuLabel}
+        data-close-label={header.closeMenuLabel}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-6 group-aria-expanded:hidden"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+        <svg
+          viewBox="0 0 24 24"
+          class="hidden size-6 group-aria-expanded:block"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú móvil: oculto hasta que se pulsa el botón -->
+  <nav
+    id="menu-movil"
+    aria-label={header.navLabel}
+    class="hidden border-t border-espresso/10 md:hidden"
+    data-menu-panel
+  >
+    <ul class="mx-auto flex max-w-6xl flex-col px-4 py-2">
+      {site.nav.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="block rounded-lg px-2 py-3 text-lg font-medium hover:bg-espresso/5"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li class="py-3 sm:hidden">
+        <Button href={header.cta.href} class="w-full">
+          {header.cta.label}
+        </Button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  // Único JavaScript de la página: abre y cierra el menú móvil.
+  const toggle =
+    document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const panel = document.querySelector<HTMLElement>("[data-menu-panel]");
+
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute(
+        "aria-label",
+        (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? "",
+      );
+      panel.classList.toggle("hidden", !open);
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    // Al elegir un enlace, cerrar el menú para ver la sección.
+    panel.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("a")) setOpen(false);
+    });
+
+    // Escape cierra el menú y devuelve el foco al botón.
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        toggle.getAttribute("aria-expanded") === "true"
+      ) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Si la pantalla crece a escritorio con el menú abierto, cerrarlo.
+    window.matchMedia("(min-width: 768px)").addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

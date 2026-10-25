@@ -1,0 +1,90 @@
+---
+import { content, site } from "../data/site";
+import Logo from "./Logo.astro";
+
+const { footer } = content;
+const year = new Date().getFullYear();
+const phoneHref = `tel:${site.contact.phone.replace(/\s/g, "")}`;
+const whatsappHref = `https://wa.me/${site.contact.whatsapp}`;
+const linkClass = "underline-offset-4 hover:underline";
+---
+
+<footer class="bg-espresso text-crema">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
+    <div class="space-y-3">
+      <Logo class="[&_rect]:fill-crema/10" />
+      <p class="text-crema/80">{site.slogan}</p>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-lg font-semibold">{footer.contactTitle}</h2>
+      <address class="space-y-1 text-crema/80 not-italic">
+        <p>{site.address.street}</p>
+        <p>
+          {site.address.neighborhood}, {site.address.city}
+        </p>
+        <p>
+          <a href={phoneHref} class={linkClass}>
+            {site.contact.phone}
+          </a>
+        </p>
+        <p>
+          <a href={`mailto:${site.contact.email}`} class={linkClass}>
+            {site.contact.email}
+          </a>
+        </p>
+        <p>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener"
+            class={linkClass}
+          >
+            {footer.whatsappLabel}
+            <span class="sr-only">{footer.newTabNote}</span>
+          </a>
+        </p>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-lg font-semibold">{footer.hoursTitle}</h2>
+      <dl class="space-y-2 text-crema/80">
+        {site.hours.map((h) => (
+          <div>
+            <dt class="font-medium text-crema">{h.label}</dt>
+            <dd>
+              {h.opens} – {h.closes}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-lg font-semibold">{footer.socialTitle}</h2>
+      <ul class="space-y-1 text-crema/80">
+        {site.social.map((s) => (
+          <li>
+            <a href={s.href} target="_blank" rel="noopener" class={linkClass}>
+              {s.name}
+              <span class="sr-only">{footer.newTabNote}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-crema/15">
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-crema/70 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <p>
+        © {year} {site.fullName} · {site.portfolioNotice}
+      </p>
+      <a href={site.githubUrl} target="_blank" rel="noopener" class={linkClass}>
+        {footer.githubLabel}
+        <span class="sr-only">{footer.newTabNote}</span>
+      </a>
+    </div>
+  </div>
+</footer>

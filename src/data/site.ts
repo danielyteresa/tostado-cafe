@@ -69,10 +69,14 @@ export const site = {
 export const content = {
   header: {
     cta: { label: "Reservar", href: "#contacto" },
+    navLabel: "Principal",
+    homeLabel: "Tostado, ir al inicio",
+    skipLink: "Saltar al contenido",
     openMenuLabel: "Abrir menú",
     closeMenuLabel: "Cerrar menú",
   },
   hero: {
+    eyebrow: "Café de especialidad · Tostado en casa",
     title: site.slogan,
     subtitle:
       "Tostamos en casa, molemos al momento y te lo servimos como te gusta.",
@@ -132,6 +136,9 @@ export const content = {
   footer: {
     contactTitle: "Contacto",
     socialTitle: "Síguenos",
+    hoursTitle: "Horario",
     githubLabel: "Ver el código en GitHub",
+    whatsappLabel: "WhatsApp",
+    newTabNote: "(se abre en otra pestaña)",
   },
 } as const;
