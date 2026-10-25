@@ -1,0 +1,15 @@
+# Configuración de despliegue en Netlify.
+# Netlify lee este archivo en cada push a main.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 necesita Node 22.23 o superior.
+  NODE_VERSION = "24"
+
+# Caché larga para los archivos con hash en el nombre (CSS, fuentes, imágenes).
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
